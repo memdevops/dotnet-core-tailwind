@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "font-awesome@6.7.2",
+      "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "apexcharts@4.3.0",
+      "destination": "wwwroot/lib/apexcharts/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "flowbite@2.5.2",
+      "destination": "wwwroot/lib/flowbite/"
+    }
+  ]
+}

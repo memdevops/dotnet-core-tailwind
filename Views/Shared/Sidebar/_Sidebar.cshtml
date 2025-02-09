@@ -1,0 +1,47 @@
+﻿<aside id="sidebar" class="flex hidden fixed top-0 z-20 flex-col flex-shrink-0 pt-16 w-64 h-full duration-200 lg:flex transition-width lg:w-64" aria-label="Sidebar">
+    <div class="flex relative flex-col flex-1 pt-0 min-h-0 bg-gray-50">
+        <div class="flex overflow-x-hidden overflow-y-auto flex-col flex-1 pt-8 pb-4">
+            <div class="flex-1 bg-gray-50 px-3" id="sidebar-items">
+                <!-- Sidebar Menu -->
+                @await Html.PartialAsync("Sidebar/_SidebarMenu")
+                <hr class="border-0 h-px bg-gradient-to-r from-gray-100 via-gray-300 to-gray-100">
+                <div class="pt-2">
+                    <a href="https://creative-tim.com/product/soft-ui-flowbite-pro" target="_blank" class="flex items-center py-2.5 px-4 text-base font-normal text-dark-500 rounded-lg hover:bg-gray-200 group transition-all duration-200" sidebar-toggle-collapse="">
+                        <div class="bg-white shadow-lg shadow-gray-300 text-dark-700 w-8 h-8 p-2.5 rounded-lg text-center grid place-items-center">
+                            <svg class="text-dark mb-1" width="12px" height="12px">
+                                <use href="/images/icons.svg#box-3d"></use>
+                            </svg>
+                        </div>
+                        <span class="ml-3 text-dark-500 text-sm font-light" sidebar-toggle-item="" data-translate="buy-now"></span>
+                    </a>
+                    <a href="https://www.creative-tim.com/learning-lab/flowbite/introduction/soft-ui-dashboard/" target="_blank" class="flex items-center py-2.5 px-4 text-base font-normal text-dark-500 rounded-lg hover:bg-gray-200 group transition-all duration-200" sidebar-toggle-collapse="">
+                        <div class="bg-white shadow-lg shadow-gray-300 text-dark-700 w-8 h-8 p-2.5 rounded-lg text-center grid place-items-center">
+                            <svg class="text-dark mb-1" width="12px" height="12px">
+                                <use href="/images/icons.svg#document"></use>
+                            </svg>
+                        </div>
+                        <span class="ml-3 text-dark-500 text-sm font-light" sidebar-toggle-item="" data-translate="docs"></span>
+                    </a>
+                    <a href="https://creative-tim.com/learning-lab/flowbite/alerts/soft-ui-dashboard/" target="_blank" class="flex items-center py-2.5 px-4 text-base font-normal text-dark-500 rounded-lg hover:bg-gray-200 group transition-all duration-200" sidebar-toggle-collapse="">
+                        <div class="bg-white shadow-lg shadow-gray-300 text-dark-700 w-8 h-8 p-2.5 rounded-lg text-center grid place-items-center">
+                            <svg class="text-dark mb-1" width="12px" height="12px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <use href="/images/icons.svg#switches"></use>
+                            </svg>
+                        </div>
+                        <span class="ml-3 text-dark-500 text-sm font-light" sidebar-toggle-item="" data-translate="components"></span>
+                    </a>
+                    <a href="https://creative-tim.com/contact-us" target="_blank" class="flex items-center py-2.5 px-4 text-base font-normal text-dark-500 rounded-lg hover:bg-gray-200 group transition-all duration-200" sidebar-toggle-collapse="">
+                        <div class="bg-white shadow-lg shadow-gray-300 text-dark-700 w-8 h-8 p-2.5 rounded-lg text-center grid place-items-center">
+                            <svg class="text-dark mb-1" width="12px" height="12px">
+                                <use href="/images/icons.svg#megaphone"></use>
+                            </svg>
+                        </div>
+                        <span class="ml-3 text-dark-500 text-sm font-light" sidebar-toggle-item="" data-translate="help"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Sidebar Bottom Menu -->
+        @await Html.PartialAsync("Sidebar/_SidebarBottomMenu")
+    </div>
+</aside>

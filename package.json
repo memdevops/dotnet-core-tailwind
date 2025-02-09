@@ -1,0 +1,17 @@
+{
+  "name": "mvcproject.web",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "css:build": "npx tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/styles.css --minify",
+    "watch": "npx tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/styles.css --minify --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "apexcharts": "^4.3.0",
+    "flowbite": "^2.5.2",
+    "tailwindcss": "^3.4.17"
+  }
+}

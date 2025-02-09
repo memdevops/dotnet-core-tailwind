@@ -1,0 +1,46 @@
+﻿html, body {
+    font-family: Arial, sans-serif;
+    direction: ltr; /* Left-to-right text */
+    text-align: left;
+}
+
+    html[dir="ltr"] svg:not(.no-rotate) {
+        transform: scaleX(1); /* Ensure normal direction */
+        transition: transform 0.3s ease; /* Smooth transition */
+    }
+
+    html:dir(ltr) #toggleSidebar {
+        margin-right: 1rem;
+    }
+
+    html:dir(ltr) .logo-img {
+        margin-inline-end: 0;
+        margin-inline-start: 0.5rem;
+    }
+
+    html[dir="ltr"] aside ul li a div {
+        margin-right: 0.25rem; /* Equivalent to mr-1 */
+        margin-left: 0;
+    }
+
+    html[dir="ltr"] aside #sidebar-items {
+        padding-left: 0.375rem;
+    }
+
+    html[dir="ltr"] aside span {
+        margin-left: .75rem;
+    }
+
+    html[dir="ltr"] aside ul li ul li a {
+        padding-left: 2.75rem;
+    }
+
+    @media (min-width: 1024px) {
+        #main-content {
+            margin-left: 16rem;
+        }
+        .search-form {
+        padding-left: 2rem; 
+        padding-right: 0;
+    }
+}

@@ -1,0 +1,44 @@
+﻿
+<div class="mt-7 overflow-x-auto">
+    <table class="w-full whitespace-nowrap">
+        <tbody>
+            @foreach (var task in Model)
+            {
+                <tr class="h-16 border border-gray-100 rounded">
+                    <td>
+                        <div class="ml-5">
+                            <input type="checkbox" class="checkbox" />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="flex items-center pl-5">
+                            <p class="text-base font-medium text-gray-700 mr-2">@task.Title</p>
+                        </div>
+                    </td>
+                    <td class="pl-24">
+                        <p class="text-sm text-gray-600">@task.Priority</p>
+                    </td>
+                    <td class="pl-5">
+                        <p class="text-sm text-gray-600">@task.DueDate.ToString("MM/dd/yyyy")</p>
+                    </td>
+                    <td class="pl-5">
+                        <p class="text-sm text-gray-600">@task.CommentsCount</p>
+                    </td>
+                    <td class="pl-5">
+                        <p class="text-sm text-gray-600">@string.Join(", ", task.Tags)</p>
+                    </td>
+                    <td class="pl-5">
+                        <button class="py-3 px-3 text-sm text-red-700 bg-red-100 rounded">
+                            Due @task.DueDate.ToString("HH:mm")
+                        </button>
+                    </td>
+                    <td class="pl-4">
+                        <button class="py-3 px-5 text-sm bg-gray-100 rounded hover:bg-gray-200">
+                            View
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

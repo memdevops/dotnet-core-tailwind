@@ -1,0 +1,46 @@
+﻿<div class="hidden relative bottom-0 left-0 justify-center w-full lg:flex bg-gray-100 space-x-4 p-4" sidebar-bottom-menu="">
+    <a href="#" class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-dark-500 hover:bg-gray-200">
+        <svg class="w-6 h-6">
+            <use href="/images/icons.svg#equalizer"></use>
+        </svg>
+    </a>
+    <a href="https://demos.creative-tim.com/soft-ui-flowbite-pro/users/settings/" data-tooltip-target="tooltip-settings" class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-dark-500 hover:bg-gray-200">
+        <svg class="w-6 h-6">
+            <use href="/images/icons.svg#gear"></use>
+        </svg>
+    </a>
+    <div id="tooltip-settings" role="tooltip" class="inline-block absolute z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg transition-opacity duration-300 tooltip shadow-lg-sm opacity-0 invisible" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(75px, -64px);" data-popper-placement="top">
+        Settings page
+        <div class="tooltip-arrow" data-popper-arrow="" style="position: absolute; left: 0px; transform: translate(51px, 0px);"></div>
+    </div>
+    <button type="button" data-dropdown-toggle="language-dropdown" class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-dark-500 hover:bg-gray-200">
+        <svg class="h-5 w-5 rounded-full mt-0.5 no-rotate">
+            <use href="/images/icons.svg#flag-us"></use>  <!-- Default: English Flag -->
+        </svg>
+    </button>
+
+    <div class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg" id="language-dropdown" data-popper-placement="bottom" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(184px, 705px);">
+        <ul class="py-1" role="none">
+            <li>
+                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-200" role="menuitem" data-lang="en">
+                    <div class="inline-flex items-center">
+                        <svg class="h-3.5 w-3.5 rounded-full mr-2 no-rotate">
+                            <use href="/images/icons.svg#flag-us"></use> <!-- Use US Flag from the sprite -->
+                        </svg>
+                        English (US)
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-200" role="menuitem" data-lang="ar">
+                    <div class="inline-flex items-center no-rotate">
+                        <svg class="h-3.5 w-3.5 rounded-full mr-2 no-rotate">
+                            <use href="/images/icons.svg#flag-om"></use> <!-- Use Oman Flag from the sprite -->
+                        </svg>
+                        العربية (OM)
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

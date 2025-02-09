@@ -1,0 +1,138 @@
+﻿@model PaginatedList<TaskModel>
+
+<div class="sm:px-6 w-full">
+    <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
+    <!-- Title -->
+    <div class="px-4 md:px-10 py-4 md:py-7">
+        <div class="flex items-center justify-between">
+            <p tabindex="0" class="focus:outline-none text-base sm:text-lg md:text-xl lg:text-2xl font-bold leading-normal text-gray-800">Tasks</p>
+            <div class="py-3 px-4 flex items-center text-sm font-medium leading-none text-gray-600 bg-gray-200 hover:bg-gray-300 cursor-pointer rounded">
+                <p>Sort By:</p>
+                <select aria-label="select" class="focus:text-indigo-600 focus:outline-none bg-transparent ml-1">
+                    <option class="text-sm text-indigo-800">Latest</option>
+                    <option class="text-sm text-indigo-800">Oldest</option>
+                    <option class="text-sm text-indigo-800">Latest</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <!-- Container  -->
+    <div class="bg-white py-4 md:py-7 px-4 md:px-8 xl:px-10">
+        <!-- Tags -->
+        <div class="sm:flex items-center justify-between">
+            <div class="flex items-center">
+                <a class="rounded-full focus:outline-none focus:ring-2  focus:bg-accent focus:ring-accent" href=" javascript:void(0)">
+                    <div class="px-8 py-2 bg-primary text-white rounded-full">
+                        <p>All</p>
+                    </div>
+                </a>
+                <a class="rounded-full focus:outline-none focus:ring-2 focus:bg-accent focus:ring-accent ml-4 sm:ml-8" href="javascript:void(0)">
+                    <div class="py-2 px-8 text-gray-600 hover:text-white hover:bg-accent rounded-full ">
+                        <p>Done</p>
+                    </div>
+                </a>
+                <a class="rounded-full focus:outline-none focus:ring-2 focus:bg-accent focus:ring-accent ml-4 sm:ml-8" href="javascript:void(0)">
+                    <div class="py-2 px-8 text-gray-600 hover:text-white hover:bg-accent rounded-full">
+                        <p>Pending</p>
+                    </div>
+                </a>
+            </div>
+            <button onclick="popuphandler(true)" class="focus:ring-2 focus:ring-offset-2 focus:ring-primary mt-4 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-primary hover:bg-accent focus:outline-none rounded">
+                <p class="text-sm font-medium leading-none text-white">Add Task</p>
+            </button>
+        </div>
+        <!-- Tasks Table -->
+        <div id="task-table-container">
+            @await Html.PartialAsync("_TaskTable", Model)
+        </div>
+        <!-- Pagination Component -->
+        <nav aria-label="Page navigation example" class="mt-5">
+            <ul class="inline-flex -space-x-px text-base h-10">
+                <!-- Previous Button -->
+                @if (Model.HasPreviousPage)
+                {
+                    <li>
+                        <a href="javascript:void(0)" data-page="@(@Model.PageIndex - 1)" class="page-link flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
+                            Previous
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <span class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-300 bg-white border border-e-0 border-gray-300 rounded-s-lg cursor-not-allowed">
+                            Previous
+                        </span>
+                    </li>
+                }
+
+                <!-- Page Numbers -->
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li>
+                        <a href="javascript:void(0)" data-page="@i" class="page-link flex items-center justify-center px-4 h-10 @(i == Model.PageIndex ? "text-blue-600 bg-blue-50 border-gray-300" : "text-gray-500 bg-white border-gray-300 hover:bg-gray-100 hover:text-gray-700")">
+                            @i
+                        </a>
+                    </li>
+                }
+
+                <!-- Next Button -->
+                @if (Model.HasNextPage)
+                {
+                    <li>
+                        <a href="javascript:void(0)" data-page="@(@Model.PageIndex + 1)" class="page-link flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">
+                            Next
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <span class="flex items-center justify-center px-4 h-10 leading-tight text-gray-300 bg-white border border-gray-300 rounded-e-lg cursor-not-allowed">
+                            Next
+                        </span>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const container = document.getElementById("task-table-container");
+
+            document.querySelectorAll(".page-link").forEach(link => {
+                link.addEventListener("click", function () {
+                    // Use the correct attribute
+                    const page = this.getAttribute("data-page");
+                    console.log(page); // Log to verify
+
+                    if (page) { // Ensure `page` is not null
+                        fetch(`/task/index?pageIndex=${page}`, {
+                            headers: { "X-Requested-With": "XMLHttpRequest" }
+                        })
+                            .then(response => response.text())
+                            .then(html => {
+                                container.innerHTML = html; // Update the table content
+                            })
+                            .catch(error => console.error("Error:", error));
+                    }
+                });
+            });
+        });
+        function dropdownFunction(element) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            let list = element.parentElement.parentElement.getElementsByClassName("dropdown-content")[0];
+            list.classList.add("target");
+            for (i = 0; i < dropdowns.length; i++) {
+                if (!dropdowns[i].classList.contains("target")) {
+                    dropdowns[i].classList.add("hidden");
+                }
+            }
+            list.classList.toggle("hidden");
+        }
+    </script>
+}
