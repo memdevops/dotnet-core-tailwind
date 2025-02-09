@@ -1,21 +1,16 @@
 {
-  "name": "C# Dev Container",
-  "dockerFile": "../MvcProject.Web/Dockerfile",
-  "runArgs": ["--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"],
-  "settings": {
-    "terminal.integrated.defaultProfile.linux": "bash",
-    "editor.formatOnSave": true
-  },
+  "name": "Dotnet Core & Tailwind Dev Container",
+  "dockerFile": "../Dockerfile",
+  "context": "..",
+  "appPort": [8080, 8081],
   "extensions": [
     "ms-dotnettools.csharp",
-    "ms-azuretools.vscode-docker",
+    "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "dbaeumer.vscode-eslint"
-  ],
-  "remoteUser": "root",
-  "forwardPorts": [8080, 8081],
-  "postCreateCommand": "apt-get update && apt-get install -y nodejs npm && dotnet restore && npm install --prefix MvcProject.Web && dotnet watch run --urls=http://+:8080",
-  "mounts": [
-    "source=${localWorkspaceFolder}/MvcProject.Web,target=/app,type=bind"
+    "ms-vscode.vscode-node-azure-pack"
   ]
+  // "settings": {
+  //   "terminal.integrated.shell.linux": "/bin/bash"
+  // },
+  // "postCreateCommand": ""
 }
