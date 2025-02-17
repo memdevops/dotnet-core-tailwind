@@ -1,3 +1,4 @@
+# Ignore IDE-specific files and metadata
 **/.classpath
 **/.dockerignore
 **/.env
@@ -8,21 +9,37 @@
 **/.toolstarget
 **/.vs
 **/.vscode
+
+# Ignore unnecessary user and build files
 **/*.*proj.user
 **/*.dbmdl
 **/*.jfm
+
+# Ignore Kubernetes/Helm configs (if not used inside the container)
 **/azds.yaml
-**/bin
 **/charts
-**/docker-compose*
-# **/Dockerfile*
-**/node_modules
-**/npm-debug.log
-**/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
+
+# Ignore build artifacts and dependencies
+**/bin
+**/obj
+**/node_modules
+**/npm-debug.log
+**/docker-compose*
+**/Dockerfile*  # ❌ Keep this if you're using multi-stage builds outside Docker context
+
+# Ignore logs and temporary files
+**/*.log
+**/logs
+**/tmp
+**/.temp
+
+# Ignore documentation files (optional)
 LICENSE
 README.md
+
+# ✅ Keep only necessary Git files for CI/CD
 !**/.gitignore
 !.git/HEAD
 !.git/config

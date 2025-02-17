@@ -1,16 +1,27 @@
 {
   "name": "Dotnet Core & Tailwind Dev Container",
-  "dockerFile": "../Dockerfile",
-  "context": "..",
-  "appPort": [8080, 8081],
-  "extensions": [
-    "ms-dotnettools.csharp",
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "ms-vscode.vscode-node-azure-pack"
-  ]
-  // "settings": {
-  //   "terminal.integrated.shell.linux": "/bin/bash"
-  // },
-  // "postCreateCommand": ""
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "target": "build", // Target the build stage instead of the final one
+    "args": {
+      "VARIANT": "8.0",
+      "NODE_VERSION": "lts/*"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "dbaeumer.vscode-eslint", // Optional: for JavaScript linting
+        "esbenp.prettier-vscode", // Prettier for code formatting
+        "eamodio.gitlens", // GitLens for Git supercharging
+        "CoenraadS.bracket-pair-colorizer-2", // Bracket Pair Colorizer
+        "johnpapa.vscode-peacock"
+      ],
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash" // Set default terminal to bash
+      }
+    }
+  },
+  "remoteUser": "root"
 }

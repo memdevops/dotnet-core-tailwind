@@ -1,64 +1,39 @@
-# This stage is used when running from VS in fast mode (Default for Debug configuration)
-FROM mcr.microsoft.com/devcontainers/dotnet:8.0 AS base
-USER app
-WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+# Use .NET SDK 8.0 for building
+ARG VARIANT=8.0
+FROM mcr.microsoft.com/dotnet/sdk:${VARIANT} AS build
 
-# Install Node.js to build Tailwind
-FROM node:16 AS nodebuild
-
-# Set the working directory for Tailwind build
+# Set working directory
 WORKDIR /app
 
-# Copy the package.json and package-lock.json (if present) and install the dependencies
-COPY ./package*.json ./ 
-RUN npm install
+# Install Node.js for Tailwind CSS and clean up unnecessary files to reduce image size
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
+    && apt-get update \
+    && apt-get install -y nodejs \
+    && apt-get install -y git \
+    && apt-get clean
 
-# This stage is used to build the service project
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
+# Generate and trust the .NET development certificate
+RUN dotnet dev-certs https --clean && dotnet dev-certs https --trust
 
-# Install curl, wget, and other dependencies
-# RUN apt-get update && apt-get install -y curl wget gnupg
+# Copy and restore dependencies
+COPY dotnet-core-tailwind.csproj ./ 
+RUN dotnet restore
 
-# Add Microsoft package repository for .NET SDK installation
-# RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-# RUN curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/microsoft-prod.list
-# RUN apt-get update
-
-# Install .NET SDK 8.0
-# RUN apt-get install -y dotnet-sdk-8.0
-
-# Copy the project and restore dependencies
-COPY dotnet-core-tailwind.csproj /src/dotnet-core-tailwind.csproj  
-RUN dotnet restore "/src/dotnet-core-tailwind.csproj"
-
-# Add Microsoft.CodeAnalysis.Analyzers NuGet package explicitly
-RUN dotnet add /src/dotnet-core-tailwind.csproj package Microsoft.CodeAnalysis.Analyzers --version 3.3.3
-
+# Copy remaining files and build
 COPY . . 
-WORKDIR "/src/dotnet-core-tailwind"
-RUN dotnet build "/src/dotnet-core-tailwind.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet publish -c Release -o out --no-restore
 
-# Build Tailwind CSS here by using the node image
-FROM nodebuild AS tailwindbuild
+# Runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+
+# Set working directory
 WORKDIR /app
-COPY ./wwwroot/css /app/wwwroot/css
-RUN npx tailwindcss -i ./wwwroot/css/styles.css -o ./wwwroot/css/styles.min.css --minify
 
-# This stage is used to publish the service project to be copied to the final stage
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "/src/dotnet-core-tailwind.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+# Copy built application from build stage
+COPY --from=build /app/out .
 
-# This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
+# Expose port 80
+EXPOSE 80
 
-# Copy the generated Tailwind CSS from the Tailwind build container
-COPY --from=tailwindbuild /app/wwwroot/css/styles.min.css /app/wwwroot/css/styles.min.css
-
-ENTRYPOINT ["dotnet", "dotnet-core-tailwind.dll"]
+# Run the application
+CMD ["dotnet", "dotnet-core-tailwind.dll"]
